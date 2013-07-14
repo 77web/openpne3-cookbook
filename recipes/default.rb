@@ -77,6 +77,7 @@ template '/etc/apache2/sites-enabled/openpne.conf' do
     mode '0644'
     source 'openpne.conf.erb'
     not_if do ::File.exists?('/etc/apache2/sites-enabled/openpne.conf') end
+    notifies :reload, "service[apache2]"
 end
 
 service 'apache2' do
