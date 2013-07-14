@@ -1,0 +1,5 @@
+name "openpne3"
+maintainer "77web"
+maintainer_email "info@77-web.com"
+license "MIT"
+recipe "openpne3", "OpenPNE3 installation"
