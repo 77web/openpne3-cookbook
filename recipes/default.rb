@@ -60,12 +60,8 @@ execute "set date.timezone to 'Asia/Tokyo' in /etc/php5/apache2/php.ini?" do
 end
 
 execute 'openpne3-clone' do
-    command "cd /var/www; git clone git://github.com/openpne/OpenPNE3;"
+    command "cd /var/www; git clone git://github.com/openpne/OpenPNE3; cd OpenPNE3; git checkout #{node['openpne']['version']}"
     not_if do ::File.exists?('/var/www/OpenPNE3/symfony') end
-end
-
-execute 'openpne3-version-checkout' do
-    command "cd /var/www/OpenPNE3; git checkout #{node['openpne']['version']}"
 end
 
 execute 'openpne3-copy-OpenPNE.yml' do
