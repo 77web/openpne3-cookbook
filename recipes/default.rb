@@ -59,8 +59,23 @@ execute "set date.timezone to 'Asia/Tokyo' in /etc/php5/apache2/php.ini?" do
   command "echo 'date.timezone = Asia/Tokyo' > /etc/php5/apache2/php.ini"
 end
 
-execute 'openpne3-prepare' do
-    command "cd /var/www; git clone git://github.com/openpne/OpenPNE3; cd OpenPNE3; git checkout #{node['openpne']['version']}; cp config/OpenPNE.yml.sample config/OpenPNE.yml; cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php"
+execute 'openpne3-clone' do
+    command "cd /var/www; git clone git://github.com/openpne/OpenPNE3;"
+    not_if do ::File.exists?('/var/www/OpenPNE3/symfony') end
+end
+
+execute 'openpne3-version-checkout' do
+    command "cd /var/www/OpenPNE3; git checkout #{node['openpne']['version']}"
+end
+
+execute 'openpne3-copy-OpenPNE.yml' do
+    command "cd /var/www/OpenPNE3; cp config/OpenPNE.yml.sample config/OpenPNE.yml"
+    not_if do ::File.exists?('/var/www/OpenPNE3/config/OpenPNE.yml') end
+end
+
+execute 'openpne3-copy-ProjectConfiguration' do
+    command "cd /var/www/OpenPNE3; cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php"
+    not_if do ::File.exists?('/var/www/OpenPNE3/config/ProjectConfiguration.class.php') end
 end
 
 execute 'openpne3-add-fast-install' do
