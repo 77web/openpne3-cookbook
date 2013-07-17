@@ -1,7 +1,7 @@
 User vagrant
 Group vagrant
 
-DocumentRoot /var/www/OpenPNE3/web
-<Directory /var/www/OpenPNE3/web>
+DocumentRoot <%= node['openpne']['path'] %>
+<Directory <%= node['openpne']['path'] %>>
     AllowOverride All
 </Directory>

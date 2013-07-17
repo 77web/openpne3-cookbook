@@ -59,28 +59,33 @@ execute "set date.timezone to 'Asia/Tokyo' in /etc/php5/apache2/php.ini?" do
   command "echo 'date.timezone = Asia/Tokyo' > /etc/php5/apache2/php.ini"
 end
 
+execute 'openpne3-path' do
+    command "mkdir #{node['openpne']['path']}"
+    not_if do ::File.exists?("#{node['openpne']['path']}") end
+end
+
 execute 'openpne3-clone' do
-    command "cd /var/www; git clone git://github.com/openpne/OpenPNE3; cd OpenPNE3; git checkout #{node['openpne']['version']}"
-    not_if do ::File.exists?('/var/www/OpenPNE3/symfony') end
+    command "cd #{node['openpne']['path']}; git init; git remote add origin git://github.com/openpne/OpenPNE3; git fetch origin; git checkout #{node['openpne']['version']}"
+    not_if do ::File.exists?("#{node['openpne']['path']}/symfony") end
 end
 
 execute 'openpne3-copy-OpenPNE.yml' do
-    command "cd /var/www/OpenPNE3; cp config/OpenPNE.yml.sample config/OpenPNE.yml"
-    not_if do ::File.exists?('/var/www/OpenPNE3/config/OpenPNE.yml') end
+    command "cd #{node['openpne']['path']}; cp config/OpenPNE.yml.sample config/OpenPNE.yml"
+    not_if do ::File.exists?("#{node['openpne']['path']}/config/OpenPNE.yml") end
 end
 
 execute 'openpne3-copy-ProjectConfiguration' do
-    command "cd /var/www/OpenPNE3; cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php"
-    not_if do ::File.exists?('/var/www/OpenPNE3/config/ProjectConfiguration.class.php') end
+    command "cd #{node['openpne']['path']}; cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php"
+    not_if do ::File.exists?("#{node['openpne']['path']}/config/ProjectConfiguration.class.php") end
 end
 
 execute 'openpne3-add-fast-install' do
-    command 'cd /var/www/OpenPNE3; wget https://raw.github.com/77web/OpenPNE3/web_installer_proposal_2/lib/task/openpneFastInstallTask.class.php -P lib/task; php symfony openpne:fast-install'
-    not_if do ::File.exists?('/var/www/OpenPNE3/lib/task/openpneFastInstallTask.class.php') end
+    command "cd #{node['openpne']['path']}; wget https://raw.github.com/77web/OpenPNE3/web_installer_proposal_2/lib/task/openpneFastInstallTask.class.php -P lib/task; php symfony openpne:fast-install"
+    not_if do ::File.exists?("#{node['openpne']['path']}/lib/task/openpneFastInstallTask.class.php") end
 end
 
 execute 'openpne3-install' do
-    command "cd /var/www/OpenPNE3; php symfony openpne:fast-install  --dbms=mysql --dbuser=#{node['openpne']['database_user']} --dbpassword=#{node['openpne']['database_password']} --dbname=#{node['openpne']['database_name']} --dbhost=#{node['openpne']['database_host']}"
+    command "cd #{node['openpne']['path']}; php symfony openpne:fast-install  --dbms=mysql --dbuser=#{node['openpne']['database_user']} --dbpassword=#{node['openpne']['database_password']} --dbname=#{node['openpne']['database_name']} --dbhost=#{node['openpne']['database_host']}"
 end
 
 template '/etc/apache2/sites-enabled/openpne.conf' do
