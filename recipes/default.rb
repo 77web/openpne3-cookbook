@@ -51,7 +51,7 @@ mysql_database_user node['openpne']['database_user'] do
 end
 
 node['php']['packages'] = ['php5-cli', 'php5-gd', 'php5-mysql', 'libapache2-mod-php5']
-include_recipe 'php'
+include_recipe "php::#{node['php']['install_method']}"
 
 execute "set date.timezone to 'Asia/Tokyo' in /etc/php5/apache2/php.ini?" do
   user "root"
