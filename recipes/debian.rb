@@ -27,7 +27,7 @@ execute "apt-get-update-periodic" do
 end
 
 #php packages for debian
-node['php']['packages'] = ['php5-cli', 'php5-gd', 'php5-mysql', 'libapache2-mod-php5']
+node['php']['packages'] = ['php5-cli', 'php5-gd', 'php5-mysql']
 
 include_recipe 'openpne3::common'
 
