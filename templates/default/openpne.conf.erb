@@ -1,7 +1,7 @@
 User vagrant
 Group vagrant
 
-DocumentRoot <%= node['openpne']['path'] %>
-<Directory <%= node['openpne']['path'] %>>
+DocumentRoot <%= node['openpne']['path'] %>/web
+<Directory <%= node['openpne']['path'] %>/web>
     AllowOverride All
 </Directory>
