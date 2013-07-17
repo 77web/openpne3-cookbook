@@ -37,9 +37,3 @@ template '/etc/apache2/sites-enabled/openpne.conf' do
     source 'openpne.conf.erb'
     not_if do ::File.exists?('/etc/apache2/sites-enabled/openpne.conf') end
 end
-
-execute 'enable-mod-rewrite' do
-    command "a2enmod rewrite"
-    not_if do ::File.exists?('/etc/apache2/mods-enabled/rewrite.load') end
-    notifies :reload, "service[apache2]"
-end

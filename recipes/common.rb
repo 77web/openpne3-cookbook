@@ -1,3 +1,4 @@
+#mysql setting
 node['mysql']['server_root_password'] = 'pass'
 node['mysql']['server_repl_password'] = 'pass'
 node['mysql']['server_debian_password'] = 'pass'
@@ -6,6 +7,7 @@ include_recipe 'mysql::client'
 include_recipe 'mysql::server'
 include_recipe 'database::mysql'
 include_recipe 'apache2'
+include_recipe 'apache2::mod_rewrite'
 include_recipe 'git'
 
 mysql_connection = ({ :host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password'] })
