@@ -29,7 +29,7 @@ end
 #php packages for debian
 node['php']['packages'] = ['php5-cli', 'php5-gd', 'php5-mysql']
 
-include_recipe 'openpne3::common'
+include_recipe 'openpne3::single'
 
 template '/etc/apache2/sites-enabled/openpne.conf' do
     user 'root'
