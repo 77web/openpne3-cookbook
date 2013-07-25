@@ -14,13 +14,15 @@ openpne3-cookbookはOpenPNE3をインストールするcookbookです。
 依存するcookbook
 ------------------
 
-下記のOpscodeのcookbookを使用します。
+openpne3::defaultは下記のOpscodeのcookbookを使用します。
 
 * apache2
 * database
 * git
 * mysql
 * php
+
+openpne3::singleはOpenPNE3のインストールのみを行うので、依存するcookbookはありません。
 
 設定可能な項目
 -----------------------
@@ -33,7 +35,7 @@ openpne3-cookbookはOpenPNE3をインストールするcookbookです。
 * node['openpne']['version'] - インストールするOpenPNE3のバージョン。 公式レポジトリのブランチ名又はタグ名を使用して下さい。: https://github.com/openpne/OpenPNE3 デフォルトでは"stable-3.8.x"です。
 * node['openpne']['path'] - OpenPNE3をインストールするパス。デフォルトでは"/var/www/OpenPNE3"です。
 
-php, mysql, apache2のインストールにはOpscodeのクックブックを使用するので、各レシピの設定項目を利用してインストールをカスタマイズすることができます。
+openpne3::defaultはphp, mysql, apache2のインストールにはOpscodeのクックブックを使用するので、各レシピの設定項目を利用してインストールをカスタマイズすることができます。
 
 使い方
 ---------
@@ -41,8 +43,7 @@ php, mysql, apache2のインストールにはOpscodeのクックブックを使
 0. クックブックのパスにこのレポジトリをcloneしてください。
 1. run_listに"openpne3"を追加するか、別のレシピからinclude_recipe "openpne3"してください。
 
-* 注意 *
-openpne3-cookbookは、OpenPNE3の前にphp,mysql,apache2をインストールします。
+※あらかじめカスタムのphp,apache2,mysqlをインストール済みの環境にOpenPNE3のみインストールする場合はinclude_recipe "openpne3::single"を利用してください。
 
 phpmatsuri
 -------------

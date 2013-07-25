@@ -22,6 +22,8 @@ Opscode cookbooks listed below are required.
 * mysql
 * php
 
+If you use openpne3::single directory, it will not require any dependent cookbooks.
+
 Attribute parameters
 -----------------------
 
@@ -43,6 +45,7 @@ Usage
 
 * ATTENTION *
 This recipe will install php, mysql, apache2 before OpenPNE3 installation.
+If you have already built up your environment and just want to install OpenPNE3, please use "openpne3::single" recipe.
 
 phpmatsuri
 -------------
